@@ -1,0 +1,367 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>나토리 노래 소트</title>
+<script type="text/javascript">
+<!--
+//*********************************************************
+//
+// ?価するメンバ?の名前のリスト
+//
+// この部分を変更して下さい。名前の削除・追加も可?です。
+// 名前を引用符(")で括り、コン?(,)で区切って下さい。
+// 但し、リストの最後にはコン?を入れてはいけません。
+//
+//*********************************************************
+var namMember = new Array(
+
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfNzgg/MDAxNzQ4OTY5MzI5MTA5.5FaGqEugFt6eIIkKqYl0r79xGsa-Ivi1_Ejhkxndh4gg.lctjYIHg-hlviGX9WkZwPEp3xA4A0Mc7QHZRC-E4RrYg.PNG/https___images.genius.com_66c02d0c614bc821d9e8ee2ee84795d7.1000x1000x1.png?type=w773> <br> DRESSING ROOM </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTg5/MDAxNzQ4OTY5MjEwOTE2.qu43DU-sbappA7Zmflorze_v7IJdYKp1tvoec4yeNLAg.o0oQ7P7a3JUXyz_Xmj126lcj0n7uBor6_2yiXdLiK0cg.PNG/https___images.genius.com_251ffa1c9ac796cbe46b0f3fcf5639fd.1000x1000x1.png?type=w773> <br> ターミナル - Terminal </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTQ2/MDAxNzQ4OTY5MjExMzEw.yqlvb4fdMg4pDEP1ZHEjBbx1Dv0KiZCkiV4KPgqdMhwg.ELLbFoA8kcC24d0udIAku0nXL3s06VjJGZUPxVcY_Vog.JPEG/https___images.genius.com_982698bdf1116fe0af83e6e2d7024b05.1000x1000x1.jpg?type=w773> <br> Cult. </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMzgg/MDAxNzQ4OTY5NDc1NzY1.7GOqUg3O2-Ht_zhQehMza_lS4eklTFUOY4yJC5tIK4Yg.W97F5ux7FRKwmfGk9_V5haYnuDjSQXsKevdYacqMvvUg.JPEG/https___images.genius.com_fa0fe4b78afaafa3662d2fb5975c83e1.1000x1000x1.jpg?type=w773> <br> IN_MY_HEAD </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTg5/MDAxNzQ4OTY5MjEwOTE2.qu43DU-sbappA7Zmflorze_v7IJdYKp1tvoec4yeNLAg.o0oQ7P7a3JUXyz_Xmj126lcj0n7uBor6_2yiXdLiK0cg.PNG/https___images.genius.com_251ffa1c9ac796cbe46b0f3fcf5639fd.1000x1000x1.png?type=w773> <br> 劇場 - Theater </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMjY0/MDAxNzQ4OTY5MjExMzA3.ZYBAnGQSRhCcUXnnb1WDd1Asq4I1nBex-bw4yd3_BZ8g.gFE7whWRDiukVyiizYtSndnSQI-rlSMiMKZOegV7dOAg.JPEG/1900x1900-000000-80-0-0.jpg?type=w773> <br> メトロシティ- Metrocity </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfNTUg/MDAxNzQ4OTY5MjEwOTA1.81xUIOTFwrS3Ob4BUalUm7MW1OEfkUe8Jsi_udQ4p4sg.Jdln3L0RwgLzFRzw645o0kKIh6XDKxnA2oIH1EPgIxkg.JPEG/https___images.genius.com_067a0495744df8a2463beb19041ca5da.1000x1000x1.jpg?type=w773> <br> フライデー・ナイト - Friday night </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTMx/MDAxNzQ4OTY5MjEwOTA5.C130MqsxZ6mP1zrgCY9JNV53FkMHb1IGh53CHLf31uAg.nsZAODdMCHhqR0fVLt_5ibF4WFcjCpKn-CoC4zkQWRYg.JPEG/19112022.jpeg?type=w773> <br> Overdose </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMjc4/MDAxNzQ4OTY5MjEwOTA5.X5ce-6czT1DYM3TkYg9c5_GInywaRknoIzrrHbW_Bskg.Rin8cKN7LT2fck6s5WfLIqc0ppFG0Ki9Xa7fNGrwUREg.JPEG/33512059.jpg?type=w773> <br> Sleepwalk </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTEy/MDAxNzQ4OTY5NTg3Mzg2.1-unpkGEIr09KRolP_wUKJrNlhfAdA4iff2MsPyGkScg.gRDC6mIRz_WWDX9f5mNCw_lX3l-sPxohNwBTUgLQo1Eg.JPEG/https___images.genius.com_2721506daddd48fd6244cd1bbb18de95.1000x1000x1.jpg?type=w773> <br> 猿芝居 - Saru shibai </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMjQ5/MDAxNzQ4OTY5MjEwOTA2.NvD3LQVe3bLWtg_nB-JmNHL7NAyln0SXUhRh2U3m2o0g.8ofZOw-D94zbK5fkFI_A0lvWEcWzrPXBTQSQ_yrzMksg.JPEG/https___images.genius.com_85b8cf1db65e0e4c3a82d36e47ab2960.1000x1000x1.jpg?type=w773> <br> エウレカ - Eureka </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfOTcg/MDAxNzQ4OTY5MjExMzMy.oz2O0qGOqONqb6lLFn_K7ZBG8Apgc3Pv9xrhKnyHucIg.22QzXfuRVQ_KfiX9fc2A2id9azZNG0lyuih1IS2q0Tcg.PNG/https___images.genius.com_71653247aa63a699182977616cd920d4.1000x1000x1.png?type=w773> <br> いらないもの - chained </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTIw/MDAxNzQ4OTY5MjEwOTA3.HHfZehCDKkqWKtYNN5P5RHfWdtlAoWM69sWPBk8gTg8g.JIN1wgu_Xq7ScmnrdrUS7yuqzGQS_UoKDScr7Cnsc_8g.JPEG/https___images.genius.com_97faaa9d480bd58dbfc75372d414ff46.1000x1000x1.jpg?type=w773> <br> 食卓 - fool's table </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTkx/MDAxNzQ4OTY5NjYwMTkz.TOx71-QDBIWD15GdB2y9dijX_6uBVInxh4gV8WX8SPUg.GS6AInP05pBvTdRtyhybiiXhASVddhFNzrWCYSVnr-Mg.PNG/https___images.genius.com_95f5401d9226120f22bcdda63203aebf.1000x1000x1.png?type=w773> <br> メロドラマ - Melodrama </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMjM2/MDAxNzQ4OTY5MjExMzIx.ZaVID2xbn0WO072ESPmdpjAO4G-lXcN6BvXLozqVv2Ig.YATgK3UHXp1YYpflhyCNsEMXVgLKlm5-SqaB1ua9FzUg.PNG/a6fd1757db911fe1ef1ad2381243fe06.300x300x1.png?type=w773> <br> 絶対零度 - Absolute zero </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTk4/MDAxNzQ4OTY5NzI3Nzkz.2bB0AiQQsSPnAnnXorLExx_LvzgBKb2ShBO1KAmx1Xgg.VQWpNh_2RHr22lkmTxhbs74shzj7oRyQHB9xCCOt_rwg.PNG/https___images.genius.com_d55389ed05f37333183eafdada4c5907.1000x1000x1.png?type=w773> <br> SPEED </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfOTcg/MDAxNzQ4OTY5MjExMzMy.oz2O0qGOqONqb6lLFn_K7ZBG8Apgc3Pv9xrhKnyHucIg.22QzXfuRVQ_KfiX9fc2A2id9azZNG0lyuih1IS2q0Tcg.PNG/https___images.genius.com_71653247aa63a699182977616cd920d4.1000x1000x1.png?type=w773> <br> 上書きしちゃった - Overwritten </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTg5/MDAxNzQ4OTY5MjEwOTE2.qu43DU-sbappA7Zmflorze_v7IJdYKp1tvoec4yeNLAg.o0oQ7P7a3JUXyz_Xmj126lcj0n7uBor6_2yiXdLiK0cg.PNG/https___images.genius.com_251ffa1c9ac796cbe46b0f3fcf5639fd.1000x1000x1.png?type=w773> <br> ラブソング - Love-song </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTMy/MDAxNzQ4OTY5MjExMzI5.6NQEQe4W3JRvMDbhFyROSwBq1kj5bb2rMD3xbrmugR8g.PZweVJKoG6gXh1BfE6bz-vgBj7_EFmI_E6n7ylWNEOYg.PNG/805904e6fbcf4c10dc7897584398f827.300x300x1.png?type=w773> <br> 金木犀 - Osmanthus </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTg5/MDAxNzQ4OTY5MjEwOTE2.qu43DU-sbappA7Zmflorze_v7IJdYKp1tvoec4yeNLAg.o0oQ7P7a3JUXyz_Xmj126lcj0n7uBor6_2yiXdLiK0cg.PNG/https___images.genius.com_251ffa1c9ac796cbe46b0f3fcf5639fd.1000x1000x1.png?type=w773> <br> 夜の歯車 - A Night To Sing With You </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTUg/MDAxNzQ4OTY5MjExNTky.1EjgYMwTNU3oksyp7kbwTlNyWjtjU_Rbe2U9P-yDeXgg.QwzXMYo7fq9gElg1CpVoFD58yW8vfQJSUgTv5oNlNKQg.JPEG/0x1900-000000-80-0-0_(1).jpg?type=w773> <br> メーベル (Mabel) </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMjkw/MDAxNzQ4OTY5MjExMzE2.EAis5gi-fzrSzRFP0JJHa8o2PVEvtt7sMD4bdvCeaYIg.EQ0dzDv8cPRS7GDavhjkzxhPOMYae73JhXVZCBdzzEUg.PNG/https___images.genius.com_e5155cc7419c7ecd406b93ae6b56d811.1000x1000x1.png?type=w773> <br> ライツオフ - Lights Off (feat. NATORI) </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMjYy/MDAxNzQ4OTY5MjExNjE5.KLpV76VJPjpgE7jqq4U7Og7DI0Qxi7WXGlefeQVggvIg.67x9DlAnG5Q0FcpD592rXJKSHFlTypDhM3hFGWaZOaIg.JPEG/0x1900-000000-80-0-0.jpg?type=w773> <br> 糸電話 - Thread That Connects Us </br>",
+"<img src=https://postfiles.pstatic.net/MjAyNTA2MDRfMTg5/MDAxNzQ4OTY5MjEwOTE2.qu43DU-sbappA7Zmflorze_v7IJdYKp1tvoec4yeNLAg.o0oQ7P7a3JUXyz_Xmj126lcj0n7uBor6_2yiXdLiK0cg.PNG/https___images.genius.com_251ffa1c9ac796cbe46b0f3fcf5639fd.1000x1000x1.png?type=w773> <br> カーテンコール - Curtain-Call </br>",
+
+);
+//*********************************************************
+
+var lstMember = new Array();
+var parent = new Array();
+var equal = new Array();
+var rec = new Array();
+var cmp1,cmp2;
+var head1,head2;
+var nrec;
+
+var numQuestion;
+var totalSize;
+var finishSize;
+var finishFlag;
+
+//変数の初期化+++++++++++++++++++++++++++++++++++++++++++++
+function initList(){
+var n = 0;
+var mid;
+var i;
+
+//??トすべき配列
+lstMember[n] = new Array();
+for (i=0; i<namMember.length; i++) {
+lstMember[n][i] = i;
+}
+parent[n] = -1;
+totalSize = 0;
+n++;
+
+for (i=0; i<lstMember.length; i++) {
+//要素数が２以上なら２分割し、
+//分割された配列をlstMemberの最後に加える
+if(lstMember[i].length>=2) {
+mid = Math.ceil(lstMember[i].length/2);
+lstMember[n] = new Array();
+lstMember[n] = lstMember[i].slice(0,mid);
+totalSize += lstMember[n].length;
+parent[n] = i;
+n++;
+lstMember[n] = new Array();
+lstMember[n] = lstMember[i].slice(mid,lstMember[i].length);
+totalSize += lstMember[n].length;
+parent[n] = i;
+n++;
+}
+}
+
+//保存用配列
+for (i=0; i<namMember.length; i++) {
+rec[i] = 0;
+}
+nrec = 0;
+
+//引き分けの結果を保存するリスト
+//キ?：リンク始?の値
+// 値 ：リンク終?の値
+for (i=0; i<=namMember.length; i++) {
+equal[i] = -1;
+}
+
+cmp1 = lstMember.length-2;
+cmp2 = lstMember.length-1;
+head1 = 0;
+head2 = 0;
+numQuestion = 1;
+finishSize = 0;
+finishFlag = 0;
+}
+
+//リストの??ト+++++++++++++++++++++++++++++++++++++++++++
+//flag：比較結果
+//  -1：左を選択
+//   0：引き分け
+//   1：右を選択
+function sortList(flag){
+var i;
+var str;
+
+//recに保存
+if (flag<0) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+}
+else if (flag>0) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+else {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+equal[rec[nrec-1]] = lstMember[cmp2][head2];
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+while (equal[rec[nrec-1]]!=-1) {
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+
+//片方のリストを走査し終えた後の処理
+if (head1<lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+//リストcmp2が走査済 - リストcmp1の残りをコピ?
+while (head1<lstMember[cmp1].length){
+rec[nrec] = lstMember[cmp1][head1];
+head1++;
+nrec++;
+finishSize++;
+}
+}
+else if (head1==lstMember[cmp1].length && head2<lstMember[cmp2].length) {
+//リストcmp1が走査済 - リストcmp2の残りをコピ?
+while (head2<lstMember[cmp2].length){
+rec[nrec] = lstMember[cmp2][head2];
+head2++;
+nrec++;
+finishSize++;
+}
+}
+
+//両方のリストの最後に到達した場合は
+//親リストを更新する
+if (head1==lstMember[cmp1].length && head2==lstMember[cmp2].length) {
+for (i=0; i<lstMember[cmp1].length+lstMember[cmp2].length; i++) {
+lstMember[parent[cmp1]][i] = rec[i];
+}
+lstMember.pop();
+lstMember.pop();
+cmp1 = cmp1-2;
+cmp2 = cmp2-2;
+head1 = 0;
+head2 = 0;
+
+//新しい比較を行う前にrecを初期化
+if (head1==0 && head2==0) {
+for (i=0; i<namMember.length; i++) {
+rec[i] = 0;
+}
+nrec = 0;
+}
+}
+
+if (cmp1<0) {
+str = "Battle No."+(numQuestion-1)+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+document.getElementById("battleNumber").innerHTML = str;
+
+showResult();
+finishFlag = 1;
+}
+else {
+showImage();
+}
+}
+
+//結果の?示+++++++++++++++++++++++++++++++++++++++++++++++
+function showResult() {
+var ranking = 1;
+var sameRank = 1;
+var str = "";
+var i;
+
+str += "<table style=\"width:200px; font-size:12px; line-height:120%; margin-left:auto; margin-right:auto; border:1px solid #000; border-collapse:collapse\" align=\"center\">";
+str += "<tr><td style=\"color:#ffffff; background-color:#000; text-align:center;\">순위<\/td><td style=\"color:#ffffff; background-color:#000; text-align:center;\">이름<\/td><\/tr>";
+
+for (i=0; i<namMember.length; i++) {
+str += "<tr><td style=\"border:1px solid #000; text-align:right; padding-right:5px;\">"+ranking+"<\/td><td style=\"border:1px solid #000; padding-left:5px;\">"+namMember[lstMember[0][i]]+"<\/td><\/tr>";
+if (i<namMember.length-1) {
+if (equal[lstMember[0][i]]==lstMember[0][i+1]) {
+sameRank++;
+} else {
+ranking += sameRank;
+sameRank = 1;
+}
+}
+}
+str += "<\/table>";
+
+document.getElementById("resultField").innerHTML = str;
+}
+
+//比較する２つ要素の?示+++++++++++++++++++++++++++++++++++
+function showImage() {
+var str0 = "Battle No."+numQuestion+"<br>"+Math.floor(finishSize*100/totalSize)+"% sorted.";
+var str1 = ""+toNameFace(lstMember[cmp1][head1]);
+var str2 = ""+toNameFace(lstMember[cmp2][head2]);
+
+document.getElementById("battleNumber").innerHTML = str0;
+document.getElementById("leftField").innerHTML = str1;
+document.getElementById("rightField").innerHTML = str2;
+
+numQuestion++;
+}
+
+//数値を名前（顔文字）に変換+++++++++++++++++++++++++++++++
+function toNameFace(n){
+var str = namMember[n];
+
+//顔文字を追加する場合は以下のコメントアウトを外す
+//namMemberのインデックスと矛盾しないように注意
+/*
+str += "<br>────<br>";
+switch(n) {
+//case -1 はサンプルなので削除すること
+case -1: str+="（ ´∀｀）";break;
+default: str+=""+n;
+}
+*/
+return str;
+}
+//-->
+</script>
+<style type="text/css">
+<!--
+/**********************************************************
+
+ ?のス?イルを変更する場合はここを編集してください。
+
+**********************************************************/
+#mainTable{
+font-size: 12px;
+font-family: '돋움',sans-serif;
+text-align: center;
+vertical-align: middle;
+width: 410px;
+margin-left: auto;
+margin-right: auto;
+border-collapse: separate;
+border-spacing: 10px 5px;
+}
+#leftField{
+width: 120px;
+height: 150px;
+border: 1px solid #000;
+}
+#rightField{
+width: 120px;
+height: 150px;
+border: 1px solid #000;
+}
+.middleField{
+width: 120px;
+height: 70px;
+border: 1px solid #000;
+}
+//-->
+<!--
+A{
+  text-decoration : none;
+}
+-->
+<!--
+a:hover{color:#99ccff;}
+-->
+</style>
+<meta name="generator" content="Namo WebEditor(Trial)">
+<meta http-equiv="content-type" content="text/html; charset=utf-8"></head>
+
+<body text="#000000" bgcolor="#ffffff" link="#0099ff" vlink="#0099ff" alink="#0099ff">
+<table id="mainTable" align="center">
+<tr>
+        <td id="battleNumber" colspan="3" style="padding-bottom: 10px;">
+            <p>&nbsp;</p>
+        </td>
+</tr>
+<tr>
+<td id="leftField" onClick="if(finishFlag==0)sortList(-1);" rowspan="2">
+&nbsp;
+</td>
+<td class="middleField" onClick="if(finishFlag==0)sortList(0);">
+둘 다 좋다
+</td>
+<td id="rightField" onClick="if(finishFlag==0)sortList(1);" rowspan="2">
+</td>
+</tr>
+<tr>
+<td class="middleField" onClick="if(finishFlag==0)sortList(0);">
+모르겠다
+</td>
+</tr>
+</table><br><br>
+<div id="resultField" style="text-align:center;">
+    <p><font size="2" face="돋움"><span style=""> 나토리 노래 소트 </font></p>
+    <p><font size="2" face="돋움"> 2025.06.04 update </font></p>
+
+</div>
+<script type="text/javascript">
+<!--
+initList();
+showImage();
+//-->
+</script>
+
+</body>
+</html>
